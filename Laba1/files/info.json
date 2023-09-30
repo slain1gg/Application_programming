@@ -1,0 +1,14 @@
+{
+    "id": 0,
+    "first_name": "Alexandr",
+    "last_name": "Elkin",
+    "age": 100,
+    "email": "El@gmail.com",
+    "phone": "+79084445569",
+    "department": "Math",
+    "work_experience": 99,
+    "subjects": [
+        "math",
+        "linear algebra"
+    ]
+}

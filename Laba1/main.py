@@ -1,86 +1,108 @@
 import json
 from abc import ABC, abstractmethod
+import lxml
 
 
 class User(ABC):
     def __init__(self, id, first_name, last_name, age, email, phone):
-        self.id = id
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.phone = phone
-        self.age = age
+        self._id = id
+        self._first_name = first_name
+        self._last_name = last_name
+        self._email = email
+        self._phone = phone
+        self._age = age
 
     @abstractmethod
-    def write_info(self, file):
+    def write_info_to_file_json(self, file):
         pass
 
     @abstractmethod
-    def _get_json(self, file):
-        with open(file, 'r') as f:
-            info = json.load(f)
-        return info
+    def get_json_from_file(self, file):
+        pass
 
+    @abstractmethod
+    def write_info_to_file_xml(self, file):
+        pass
+
+    @abstractmethod
+    def get_xml_from_file(self, file):
+        pass
 
 class Student(User):
     def __init__(self, id, first_name, last_name, age, email, phone, education, graduate_work, direction_of_training):
         super().__init__(id, first_name, last_name, age, email, phone)
-        self.education = education
-        self.graduate_work = graduate_work
-        self.direction_of_training = direction_of_training
+        self.__education = education
+        self.__graduate_work = graduate_work
+        self.__direction_of_training = direction_of_training
 
     def get_students_timetable(self):
         print('Получено студенческое расписание')
 
-    def write_info(self, file):
+    def write_info_to_file_json(self, file):
         info = {
-            'id': self.id,
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-            'age': self.age,
-            'email': self.email,
-            'education': self.education,
-            'graduate_work': self.graduate_work,
-            'direction_of_training': self.direction_of_training
+            'id': self._id,
+            'first_name': self._first_name,
+            'last_name': self._last_name,
+            'age': self._age,
+            'email': self._email,
+            'phone': self._phone,
+            'education': self.__education,
+            'graduate_work': self.__graduate_work,
+            'direction_of_training': self.__direction_of_training
         }
         with open(file, 'w') as f:
             json.dump(info, f, indent=4)
 
-    def _get_json(self, file):
+    def get_json_from_file(self, file):
         with open(file, 'r') as f:
             info = json.load(f)
         return info
+
+    def get_xml_from_file(self, file):
+        pass #todo: realize this point
+
+    def write_info_to_file_xml(self, file):
+        pass #todo: realize this point
 
 
 class Teacher(User):
     def __init__(self, id, first_name, last_name, age, email, phone, department, work_experience, subjects):
         super().__init__(id, first_name, last_name, age, email, phone)
-        self.department = department
-        self.work_experience = work_experience
-        self.subjects = subjects
+        self.__department = department
+        self.__work_experience = work_experience
+        self.__subjects = subjects
 
     def get_teacher_timetable(self):
         print('Получено расписание для преподавателя')
 
-    def write_info(self, file):
+    def write_info_to_file_json(self, file):
         info = {
-            'id': self.id,
-            'first_name': self.first_name,
-            'last_name': self.last_name,
-            'age': self.age,
-            'email': self.email,
-            'department': self.department,
-            'work_experience': self.work_experience,
-            'subjects': self.subjects
+            'id': self._id,
+            'first_name': self._first_name,
+            'last_name': self._last_name,
+            'age': self._age,
+            'email': self._email,
+            'phone': self._phone,
+            'department': self.__department,
+            'work_experience': self.__work_experience,
+            'subjects': self.__subjects
         }
         with open(file, 'w') as f:
             json.dump(info, f, indent=4)
 
-    def _get_json(self, file):
+    def get_json_from_file(self, file):
         with open(file, 'r') as f:
             info = json.load(f)
         return info
 
+    def get_xml_from_file(self, file):
+        pass #todo: realize this point
 
-Elkin = Teacher(0, 'Alexandr', 'Elkin', 100, 'El@gmail.com', '+79084445569', 'Math', 99, ['math', 'linear algenra'])
-Elkin.write_info('files\info.json')
+    def write_info_to_file_xml(self, file):
+        pass #todo: realize this point
+
+
+Elkin = Teacher(0, 'Alexandr', 'Elkin', 100, 'El@gmail.com', '+79084445569', 'Math', 99, ['math', 'linear algebra'])
+Elkin.write_info_to_file_json('files/info.json')
+info = Elkin.get_json_from_file('files/info.json')
+
