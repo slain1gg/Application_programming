@@ -1,6 +1,5 @@
 import json
 from abc import ABC, abstractmethod
-import lxml
 
 
 class User(ABC):
@@ -28,6 +27,7 @@ class User(ABC):
     def get_xml_from_file(self, file):
         pass
 
+
 class Student(User):
     def __init__(self, id, first_name, last_name, age, email, phone, education, graduate_work, direction_of_training):
         super().__init__(id, first_name, last_name, age, email, phone)
@@ -54,15 +54,18 @@ class Student(User):
             json.dump(info, f, indent=4)
 
     def get_json_from_file(self, file):
-        with open(file, 'r') as f:
-            info = json.load(f)
-        return info
+        try:
+            with open(file, 'r') as f:
+                info = json.load(f)
+            return info
+        except FileNotFoundError:
+            print('Ошибка при вызове функции get_json_from_file. ТАКОГО ФАЙЛА НЕ НАЙДЕНО! ПРОВЕРЬТЕ ПУТЬ!!!')
 
     def get_xml_from_file(self, file):
-        pass #todo: realize this point
+        pass  # todo: realize this point
 
     def write_info_to_file_xml(self, file):
-        pass #todo: realize this point
+        pass  # todo: realize this point
 
 
 class Teacher(User):
@@ -91,18 +94,20 @@ class Teacher(User):
             json.dump(info, f, indent=4)
 
     def get_json_from_file(self, file):
-        with open(file, 'r') as f:
-            info = json.load(f)
-        return info
+        try:
+            with open(file, 'r') as f:
+                info = json.load(f)
+            return info
+        except FileNotFoundError:
+            print('Ошибка при вызове функции get_json_from_file. ТАКОГО ФАЙЛА НЕ НАЙДЕНО! ПРОВЕРЬТЕ ПУТЬ!!!')
 
     def get_xml_from_file(self, file):
-        pass #todo: realize this point
+        pass  # todo: realize this point
 
     def write_info_to_file_xml(self, file):
-        pass #todo: realize this point
+        pass  # todo: realize this point
 
 
 Elkin = Teacher(0, 'Alexandr', 'Elkin', 100, 'El@gmail.com', '+79084445569', 'Math', 99, ['math', 'linear algebra'])
 Elkin.write_info_to_file_json('files/info.json')
-info = Elkin.get_json_from_file('files/info.json')
-
+info = Elkin.get_json_from_file('files/inf1o.json')
